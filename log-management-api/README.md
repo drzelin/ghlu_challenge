@@ -1,24 +1,60 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Log Management API
 
-Things you may want to cover:
+The Log Management API is built using Ruby on Rails. The point of the project is to provide two endpoints -- send_logs and request_logs. 
 
-* Ruby version
+## Project Architecture
 
-* System dependencies
+The user can use the send_logs endpoint to send one or more log messages in the format:
+'''json
+    [
+        <timestamp> <log data>,
+        ...
+    ]
+'''
 
-* Configuration
+The use can use the request_logs endpoint to request logs with a timestamp between a given range in the format:
 
-* Database creation
+'''
+    /requst_logs?start=<start date and optional time>&end=<end date and optional time>
+'''
 
-* Database initialization
+The start and end dates in the GET request should be in the format 'MM/DD/YYYYTHR:MN:SC'
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+There is one model in this project, the Logs model that contains a log date and a log message that gets stored in a mysql database. Both of the endpoings (SendLogs and RequestLogs) rely on date described by the Logs model.
 
-* Deployment instructions
+## Setup
 
-* ...
+### Versions:
+* Ruby Version 2.6.2
+* Rails Version 6.0.0.beta3
+
+### Getting started:
+'''
+    cd log-management-api
+    bundle install
+    brew services start mysql
+    mysql_secure_installation
+        set password to 'mysqlpassword'
+    rake db:create
+    rails db:migrate
+    [optional fake data] rails db:seed
+    rails server
+'''
+
+## Completed
+
+* Make a POST request to the 'send_logs' endpoint for one or more log messages
+* Make a GET request to the 'request_logs' endpoint with a start and receive any log messages with a timestamp within provided range
+
+## Known Bugs
+* Start and end timestamp sometimes are not interpretted correctly
+* Allow for log messages with up to 9 digits after seconds, however, mysql database only stores up to 2 digits
+* POST request for send_logs requires all log messages to be in a JSON formatted list, not the same format as problem description
+
+## Future Work
+* Build test suite to ensure log timestamp falls within user range
+* Account for time zones
+* Allow user to request logs based on other parameters such as ids, text within the log messages, etc

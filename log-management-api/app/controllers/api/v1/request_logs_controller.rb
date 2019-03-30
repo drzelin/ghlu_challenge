@@ -1,3 +1,5 @@
+require 'date'
+
 module Api
   module V1
     class RequestLogsController < ApplicationController
@@ -7,9 +9,13 @@ module Api
       end
 
       def show
-        log = Log.find(params[:id])
-        render json: {status: 'SUCCESS', message: 'Loaded log', data: log}, status: :ok
+        Rails.logger.debug("params: #{params}")
+        @start = DateTime.parse(params[:start]).iso8601(9)
+        @end = DateTime.parse(params[:end]).iso8601(9)
+        log = Log.where('log_time BETWEEN ? AND ?', @start, @end)
+        render json: log 
       end
+
     end
   end
 end
