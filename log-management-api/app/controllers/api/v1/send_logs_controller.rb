@@ -3,18 +3,29 @@ module Api
     class SendLogsController < ApplicationController
 
       def create 
-        log = Log.new(log_params)
-        if log.save
-          render json: {status: 'SUCCESS', message: 'Stored log', data: log}, status: :ok
+        unprocessable_data = false
+        @data = []
+        params[:_json].each do |log|
+            log = Log.new(log_params(log))
+            if log.save
+                @data.push({status: 'SUCCESS', message: 'Stored log', data: log})
+            else
+                unprocessable_data = true
+                @data.push({status: 'ERROR', message: 'Log not stored', data: log})
+            end
+        end
+        
+        if unprocessable_data == true
+            render json: @data.to_json, status: :unprocessable_entity
         else
-          render json: {status: 'ERROR', message: 'Could not store log', data: log.errors}, status: :unprocessable_entity
+            render json: @data.to_json, status: :ok
         end
       end
 
       private
 
-      def log_params
-        params.permit(:log_data, :log_time)
+      def log_params (log)
+          log.permit(:log_data, :log_time)
       end
 
     end
