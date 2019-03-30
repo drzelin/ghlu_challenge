@@ -48,6 +48,11 @@ There is one model in this project, the Logs model that contains a log date and 
 * Make a POST request to the 'send_logs' endpoint for one or more log messages
 * Make a GET request to the 'request_logs' endpoint with a start and receive any log messages with a timestamp within provided range
 
+## Design Decisions
+
+* If a subset of the log messages provided in a POST request is invalid (does not start with a timestamp), the rest of the log messages will be stored, but the response status will be :bad_request. In the response message, the information about which log messages are invalid is be provided.
+* An example of a single POST request was provided in the specs; however, not for multiple. The format for multiple log messages is described in the Project Architecture section of this README
+
 ## Known Bugs
 * Start and end timestamp sometimes are not interpretted correctly
 * Allow for log messages with up to 9 digits after seconds, however, mysql database only stores up to 2 digits
