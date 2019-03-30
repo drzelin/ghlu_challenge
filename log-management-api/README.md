@@ -99,9 +99,9 @@ The user can use the send_logs endpoint to send one or more log messages in the 
 * The format of the timetamps was not specified in the specifications. Because the specification example had 6 digits following the seconds, the rest of the applications follows that format.
 
 ## Known Bugs
-* Start and end timestamp sometimes are not interpretted correctly
 * Allow for log messages with up to 9 digits after seconds, however, mysql database only stores up to 2 digits
 
 ## Future Work
 * Build test suite to ensure log timestamp falls within user range
+* Use Faker to combine times and dates to generate random dates along with random times
 * Allow user to request logs based on other parameters such as ids, text within the log messages, etc.

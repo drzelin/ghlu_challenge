@@ -5,7 +5,7 @@ module Api
     class SendLogsController < ApplicationController
 
       def create
-        return_status = :ok 
+        @return_status = :ok 
         @data = []
         request.raw_post.each_line do |log|
 
@@ -13,6 +13,7 @@ module Api
             begin
                 @log_time = DateTime.parse("#{log.partition(" ").first}").iso8601(6)
             rescue ArgumentError
+                @return_status = :bad_request
                 @data.push({message: 'Valid date and time must be provided', data: log})
                 next
             end
@@ -24,12 +25,12 @@ module Api
             if log.save
                 @data.push({message: 'Stored log data and time', data: log})
             else
-                return_status = :bad_request
+                @return_status = :bad_request
                 @data.push({message: 'Log data and time not stored', data: log})
             end
         end
 
-        json_response(@data, return_status)
+        json_response(@data, @return_status)
       end
     end
   end
