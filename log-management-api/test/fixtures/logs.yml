@@ -7,3 +7,8 @@ one:
 two:
   log_data: MyText
   log_time: 2019-03-30 10:52:47
+
+valid:
+  log_data: Test text for valid record
+  log_time: 2016-02-11T23:05:03.803616+00:00
+
