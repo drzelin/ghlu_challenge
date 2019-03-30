@@ -11,8 +11,8 @@ module Api
       end
 
       def show
-        @start = DateTime.parse(params[:start]).iso8601(9)
-        @end = DateTime.parse(params[:end]).iso8601(9)
+        @start = DateTime.parse(params[:start]).iso8601(6)
+        @end = DateTime.parse(params[:end]).iso8601(6)
         log = Log.where('log_time BETWEEN ? AND ?', @start, @end)
         render json: log 
       end

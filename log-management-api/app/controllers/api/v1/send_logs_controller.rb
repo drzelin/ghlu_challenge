@@ -11,7 +11,7 @@ module Api
 
             # Extracts the timestamp from the message, and converts it into the iso8601 format
             begin
-                @log_time = DateTime.parse("#{log.partition(" ").first}").iso8601(9)
+                @log_time = DateTime.parse("#{log.partition(" ").first}").iso8601(6)
             rescue ArgumentError
                 @data.push({status: 'ERROR', message: 'Valid date and time must be provided', data: log})
                 next
