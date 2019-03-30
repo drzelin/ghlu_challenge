@@ -8,10 +8,9 @@ The Log Management API is built using Ruby on Rails. The point of the project is
 
 The user can use the send_logs endpoint to send one or more log messages in the format:
 ```
-    [
-        <timestamp> <log data>,
+        <timestamp> <log data>
+        <timestamp> <log data>
         ...
-    ]
 ```
 
 The use can use the request_logs endpoint to request logs with a timestamp between a given range in the format:
@@ -52,7 +51,6 @@ There is one model in this project, the Logs model that contains a log date and 
 ## Known Bugs
 * Start and end timestamp sometimes are not interpretted correctly
 * Allow for log messages with up to 9 digits after seconds, however, mysql database only stores up to 2 digits
-* POST request for send_logs requires all log messages to be in a JSON formatted list, not the same format as problem description
 
 ## Future Work
 * Build test suite to ensure log timestamp falls within user range
