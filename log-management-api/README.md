@@ -7,18 +7,18 @@ The Log Management API is built using Ruby on Rails. The point of the project is
 ## Project Architecture
 
 The user can use the send_logs endpoint to send one or more log messages in the format:
-'''json
+```
     [
         <timestamp> <log data>,
         ...
     ]
-'''
+```
 
 The use can use the request_logs endpoint to request logs with a timestamp between a given range in the format:
 
-'''
-    /requst_logs?start=<start date and optional time>&end=<end date and optional time>
-'''
+```
+    /request_logs?start=<start date and optional time>&end=<end date and optional time>
+```
 
 The start and end dates in the GET request should be in the format 'MM/DD/YYYYTHR:MN:SC'
 
@@ -32,17 +32,17 @@ There is one model in this project, the Logs model that contains a log date and 
 * Rails Version 6.0.0.beta3
 
 ### Getting started:
-'''
+```
     cd log-management-api
     bundle install
     brew services start mysql
     mysql_secure_installation
-        set password to 'mysqlpassword'
+        # set password to 'mysqlpassword'
     rake db:create
     rails db:migrate
-    [optional fake data] rails db:seed
+    rals db:seed # optional fake data
     rails server
-'''
+```
 
 ## Completed
 
