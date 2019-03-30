@@ -13,7 +13,7 @@ module Api
             begin
                 @log_time = DateTime.parse("#{log.partition(" ").first}").iso8601(6)
             rescue ArgumentError
-                @data.push({status: 'ERROR', message: 'Valid date and time must be provided', data: log})
+                @data.push({message: 'Valid date and time must be provided', data: log})
                 next
             end
 
@@ -22,14 +22,14 @@ module Api
             # Stores the timestamp and log data using the Log model
             log = Log.new(:log_time => @log_time, :log_data => @log_data)
             if log.save
-                @data.push({status: 'SUCCESS', message: 'Stored log data and time', data: log})
+                @data.push({message: 'Stored log data and time', data: log})
             else
                 return_status = :bad_request
-                @data.push({status: 'ERROR', message: 'Log data and time not stored', data: log})
+                @data.push({message: 'Log data and time not stored', data: log})
             end
         end
 
-        render json: @data.to_json, status: return_status
+        json_response(@data, return_status)
       end
     end
   end
