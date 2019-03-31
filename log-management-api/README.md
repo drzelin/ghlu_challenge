@@ -99,7 +99,8 @@ The user can use the send_logs endpoint to send one or more log messages in the 
 * The format of the timetamps was not specified in the specifications. Because the specification example had 6 digits following the seconds, the rest of the applications follows that format.
 * The problem specifications mention that the request for logs within a given range is by time. The assumption was made that the user must specify a date as well.
 
-## Known Bugs
+## Known Bugs 
+* The contents of the database show that there are 6 digits displayed for the time precision; however, using postman and curl, only 3 are displayed
 * The database does not store the timezone offset
 * Getting errors with both testing frameworks (rspec and minitest)
     * rspec is throwing an invalid routes error for the controller test
@@ -111,6 +112,6 @@ The user can use the send_logs endpoint to send one or more log messages in the 
     * ensure the correct logs are being returned given a range
     * ensure the app can handle any number of log messages sent in a post request
     * ensure the app can handle malformed requests gracefully
-* Add the timezone offset as another field in the database
+* Add the timezone offset to the database and account for it in the range
 * Use Faker to combine times and dates to generate random dates along with random times
 * Allow user to request logs based on other parameters such as ids, text within the log messages, etc.
