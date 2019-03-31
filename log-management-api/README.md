@@ -28,7 +28,7 @@ The Log Management API uses a mysql database to store the log timestamp and log 
 
 There is one model in this project, the Logs model that contains a log date and a log message that gets stored in a mysql database. Both of the endpoings (SendLogs and RequestLogs) rely on date described by the Logs model.
 
-There are two controllers for manging the logs. The first, SendLogsController, handles iterating through the log messages from the body of the POST request, verifying that the first string on every line is a timestampe, and stores the data in the logs database. The second, RequestLogsController, either retrieves all of the logs if no range is provided, or retrieves all logs within a range if both the start and end timestamp are provided in the GET request.
+There are two controllers for managing the logs. The first, SendLogsController, handles iterating through the log messages from the body of the POST request, verifying that the first string on every line is a timestampe, and stores the data in the logs database. The second, RequestLogsController, either retrieves all of the logs if no range is provided, or retrieves all logs within a range if both the start and end timestamp are provided in the GET request.
 
 ## API Specfications 
 
@@ -44,7 +44,7 @@ Returns a JSON object containing all of the logs in stored in the mysql database
 ```
     GET /api/v1/request_logs/<start date and optional time>/<end date and optional time>
 ```
-Returns the logs with a timestamp between a given range. The start and end dates in the GET request require at least a year, month, and day in the formation YYYY-MM-DD. GET requests sent to the app must be in the format: 
+Returns the logs with a timestamp between a given range. The start and end dates in the GET request require at least a year, month, and day in the format YYYY-MM-DD. A time can be added to the request in the format YYYY-MM-DDTHH:MM:SS. The period is not allowed by default in a rails application; therefore, you cannot use '.' to add more precision to the time in this request. GET requests sent to the app must be in the format: 
 
 Example:
 ```
@@ -97,18 +97,20 @@ The user can use the send_logs endpoint to send one or more log messages in the 
 * The user is also allowed to request all of the logs, which was not specified in the problem specifications.
 * The method in which the user inputs the range was not described in the specifications. The chosen method is described in the 'Viewing log messages within a given range' section of this README.
 * The format of the timetamps was not specified in the specifications. Because the specification example had 6 digits following the seconds, the rest of the applications follows that format.
+* The problem specifications mention that the request for logs within a given range is by time. The assumption was made that the user must specify a date as well.
 
 ## Known Bugs
-* Allow for log messages with up to 6 digits after seconds, at the moment, the mysql database is only storing 2 digits
-* Use either rspec or minitest to run controller tests
-    * rspec is throwing an error: invalid routes for the controller test
-    * minitest throwing an error: bad file descriptor
+* The database does not store the timezone offset
+* Getting errors with both testing frameworks (rspec and minitest)
+    * rspec is throwing an invalid routes error for the controller test
+    * minitest throwing a bad file descriptor error but successfully tested the logs model
 
 ## Future Work
 * Build test suite to:
     * ensure status codes are returned for all requests
     * ensure the correct logs are being returned given a range
-    * ensure the app can handle any number of log messages send in a post request
+    * ensure the app can handle any number of log messages sent in a post request
     * ensure the app can handle malformed requests gracefully
+* Add the timezone offset as another field in the database
 * Use Faker to combine times and dates to generate random dates along with random times
 * Allow user to request logs based on other parameters such as ids, text within the log messages, etc.

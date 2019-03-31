@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::RequestLogsController do
-    describe 'GET #show' do
+    describe 'GET #index' do
         before do
-            get :show
+            get :index
         end
 
         it 'returns a status message' do
