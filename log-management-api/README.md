@@ -26,11 +26,11 @@ The Log Management API is built using Ruby on Rails. The point of the project is
 
 The Log Management API uses a mysql database to store the log timestamp and log data.
 
-There is one model in this project, the Logs model that contains a log date and a log message that gets stored in a mysql database. Both of the endpoings (SendLogs and RequestLogs) rely on date described by the Logs model.
+There is one model in this project, the Logs model that contains a log date and a log message that gets stored in a mysql database. Both of the endpoints (SendLogs and RequestLogs) rely on date described by the Logs model.
 
 There are two controllers for managing the logs. The first, SendLogsController, handles iterating through the log messages from the body of the POST request, verifying that the first string on every line is a timestampe, and stores the data in the logs database. The second, RequestLogsController, either retrieves all of the logs if no range is provided, or retrieves all logs within a range if both the start and end timestamp are provided in the GET request.
 
-## API Specfications 
+## API Specifications 
 
 ### METHODS
 #### Viewing all the log messages
@@ -81,7 +81,7 @@ The user can use the send_logs endpoint to send one or more log messages in the 
         # set password to 'mysqlpassword'
     rake db:create
     rails db:migrate
-    rals db:seed # optional fake data
+    rails db:seed # optional fake data
     rails server
 ```
 
@@ -100,8 +100,6 @@ The user can use the send_logs endpoint to send one or more log messages in the 
 * The problem specifications mention that the request for logs within a given range is by time. The assumption was made that the user must specify a date as well.
 
 ## Known Bugs 
-* The contents of the database show that there are 6 digits displayed for the time precision; however, using postman and curl, only 3 are displayed
-* The database does not store the timezone offset
 * Getting errors with both testing frameworks (rspec and minitest)
     * rspec is throwing an invalid routes error for the controller test
     * minitest throwing a bad file descriptor error but successfully tested the logs model
