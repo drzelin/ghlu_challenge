@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LogTest < ActiveSupport::TestCase
     def setup
-        @log = logs(:valid)
+        @log = logs(:one)
     end
 
     test 'valid log' do
